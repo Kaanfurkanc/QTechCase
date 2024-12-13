@@ -22,4 +22,11 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\UserTaskManagement.API\UserTaskManagement.API.csproj" />
+    <ProjectReference Include="..\UserTaskManagement.Core\UserTaskManagement.Core.csproj" />
+    <ProjectReference Include="..\UserTaskManagement.Repository\UserTaskManagement.Repository.csproj" />
+    <ProjectReference Include="..\UserTaskManagement.Service\UserTaskManagement.Service.csproj" />
+  </ItemGroup>
+
 </Project>
