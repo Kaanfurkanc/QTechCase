@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using UserTaskManagement.Core.DTOs.User;
 using UserTaskManagement.Core.Entities;
 using UserTaskManagement.Core.GenericRepository;
@@ -12,7 +13,14 @@ namespace UserTaskManagement.Service
         private readonly IMapper _mapper = mapper;
         public async System.Threading.Tasks.Task CreateUserAsync(UserCreateDTO userCreateDTO)
         {
-            await _genericRepository.AddAsync(_mapper.Map<User>(userCreateDTO));
+            var existingUser = await _genericRepository.Where(u => u.Email == userCreateDTO.Email).FirstOrDefaultAsync();
+            if (existingUser != null)
+            {
+                throw new InvalidOperationException("Email already exists");
+            }
+
+            var user = _mapper.Map<User>(userCreateDTO);
+            await _genericRepository.AddAsync(user);
         }
 
         public async System.Threading.Tasks.Task DeleteUserAsync(int id)
